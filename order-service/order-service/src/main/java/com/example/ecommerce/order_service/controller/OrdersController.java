@@ -19,6 +19,11 @@ import java.util.List;
 public class OrdersController {
     private final OrderService ordersService;
 
+    @GetMapping("/helloOrders")
+    public String helloOrders(){
+        return "Hello fro, Orders Service";
+    }
+
     @GetMapping
     public ResponseEntity<List<OrderRequestDto>> getAllOrders() {
         log.info("REST request to get all orders");

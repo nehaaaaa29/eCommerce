@@ -4,6 +4,8 @@ import com.example.ecommerce.Inventory_service.dto.ProductDto;
 import com.example.ecommerce.Inventory_service.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,13 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final DiscoveryClient discoveryClient;
+
+    @GetMapping("/fetchOrders")
+    public String fetchFromOrdersService(){
+      ServiceInstance orderService = discoveryClient.getInstances("order-service");
+
+    }
 
     @GetMapping
     public ResponseEntity<List<ProductDto>> getAllInventory() {
