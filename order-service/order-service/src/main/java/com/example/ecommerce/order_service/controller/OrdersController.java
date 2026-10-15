@@ -30,4 +30,9 @@ public class OrdersController {
         log.info("REST request to get order by id: {}", id);
         return ResponseEntity.ok(ordersService.getOrderById(id));
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderRequestDto> getOrderById(@PathVariable Long id) {
+        log.info("REST request to get order by id: {}", id);
+        return ResponseEntity.ok(ordersService.getOrderById(id));
+    }
 }
