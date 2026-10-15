@@ -1,4 +1,0 @@
-package com.example.ecommerce.order_service.entity;
-
-public class Orderitem {
-}
