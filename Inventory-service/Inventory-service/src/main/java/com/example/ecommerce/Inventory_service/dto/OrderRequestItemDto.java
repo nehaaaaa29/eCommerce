@@ -1,5 +1,8 @@
 package com.example.ecommerce.Inventory_service.dto;
 
+import lombok.Data;
+
+@Data
 public class OrderRequestItemDto {
 
     private Long productId;

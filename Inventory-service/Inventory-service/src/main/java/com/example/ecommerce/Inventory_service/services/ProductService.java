@@ -1,9 +1,11 @@
 package com.example.ecommerce.Inventory_service.services;
 
 import com.example.ecommerce.Inventory_service.dto.OrderRequestDto;
+import com.example.ecommerce.Inventory_service.dto.OrderRequestItemDto;
 import com.example.ecommerce.Inventory_service.dto.ProductDto;
 import com.example.ecommerce.Inventory_service.entity.Product;
 import com.example.ecommerce.Inventory_service.repository.ProductRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -36,11 +38,26 @@ public class ProductService {
     }
 
 
-
+@Transactional
     public Double reduceStocks(OrderRequestDto orderRequestDto) {
 
         log.info("Reducing the stocks");
-        for(OrderRequestDto)
+        Double totalPrice=0.0;
+         for(OrderRequestItemDto orderRequestItemDto: orderRequestDto.getItems()){
+             Long productId= orderRequestItemDto.getProductId();
+             Integer quantity= orderRequestItemDto.getQuantity();
 
+             Product product =productRepository.findById(productId).orElseThrow(()->
+                     new RuntimeException("Product not found with id:"+productId));
+             if(product.getStock()<quantity){
+                 throw  new RuntimeException("Product cannot be fulfilled for given quantity");
+
+             }
+             product.setStock(product.getStock()-quantity);
+             productRepository.save(product);
+             totalPrice +=quantity*product.getPrice();
+
+        }
+     return totalPrice;
     }
 }
