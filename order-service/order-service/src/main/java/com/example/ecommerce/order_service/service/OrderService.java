@@ -8,6 +8,7 @@ import com.example.ecommerce.order_service.entity.OrderItem;
 import com.example.ecommerce.order_service.entity.OrderStatus;
 import com.example.ecommerce.order_service.entity.Orders;
 import com.example.ecommerce.order_service.repository.OrdersRepository;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +41,8 @@ public class OrderService {
         Orders order = ordersRepository.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
         return modelMapper.map(order, OrderRequestDto.class);
     }
-    @Retry(name="inventoryRetry",fallbackMethod = "createOrderFallback")
+    //@Retry(name="inventoryRetry",fallbackMethod = "createOrderFallback")
+    @CircuitBreaker(name = "inventoryCircuitBreaker",fallbackMethod = "createOrderFallback" )
     @RateLimiter(name="inventoryRateLimiter",fallbackMethod = "createOrderFallback")
     public OrderRequestDto createOrder(OrderRequestDto orderRequestDto) {
      log.info("calling the createOrder method");
