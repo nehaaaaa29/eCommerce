@@ -1,7 +1,11 @@
 package com.example.ecommerce.Inventory_service.clients;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 
-@FeignClient(name ="order-service" )
-public class OrderClient {
+@FeignClient(name ="order-service",path="/orders" )
+public interface OrderClient {
+    @GetMapping("/core/helloOrders")
+     String helloOrders();
+
 }
