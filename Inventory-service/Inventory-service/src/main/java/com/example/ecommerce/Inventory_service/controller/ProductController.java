@@ -1,5 +1,6 @@
 package com.example.ecommerce.Inventory_service.controller;
 
+import com.example.ecommerce.Inventory_service.clients.OrdersFeignClient;
 import com.example.ecommerce.Inventory_service.dto.ProductDto;
 import com.example.ecommerce.Inventory_service.services.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -24,14 +25,17 @@ public class ProductController {
     private final ProductService productService;
     private final DiscoveryClient discoveryClient;
     private final RestClient restClient;
+    private final OrdersFeignClient ordersFeignClient;
 
     @GetMapping("/fetchOrders")
     public String fetchFromOrdersService(){
-      ServiceInstance orderService = discoveryClient.getInstances("order-service").getFirst();
-        return restClient.get()
-                .uri(orderService.getUri()+"/orders/core/helloOrders")
-                .retrieve()
-                .body(String.class);
+    //  ServiceInstance orderService = discoveryClient.getInstances("order-service").getFirst();
+       // return restClient.get()
+         //       .uri(orderService.getUri()+"/orders/core/helloOrders")
+           //     .retrieve()
+             //   .body(String.class);
+        return  ordersFeignClient.helloOrders();
+
     }
 
     @GetMapping
