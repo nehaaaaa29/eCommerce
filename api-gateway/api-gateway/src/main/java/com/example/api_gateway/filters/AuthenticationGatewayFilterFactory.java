@@ -1,0 +1,4 @@
+package com.example.api_gateway.filters;
+
+public class AuthenticationGatewayFilterFactory {
+}
