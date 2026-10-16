@@ -1,5 +1,6 @@
 package com.example.ecommerce.Inventory_service.services;
 
+import com.example.ecommerce.Inventory_service.dto.OrderRequestDto;
 import com.example.ecommerce.Inventory_service.dto.ProductDto;
 import com.example.ecommerce.Inventory_service.entity.Product;
 import com.example.ecommerce.Inventory_service.repository.ProductRepository;
@@ -36,6 +37,10 @@ public class ProductService {
 
 
 
+    public Double reduceStocks(OrderRequestDto orderRequestDto) {
 
+        log.info("Reducing the stocks");
+        for(OrderRequestDto)
 
+    }
 }
